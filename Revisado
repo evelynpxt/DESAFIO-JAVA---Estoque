@@ -1,0 +1,148 @@
+public class Principal {
+    public static void main(String[] args) {
+        Estoque estoque = new Estoque();
+
+        // Adicionando alguns produtos ao estoque
+        ProdutoEletronico smartphone = new ProdutoEletronico("Smartphone", 1234, 1500.0, 10, "Samsung");
+        ProdutoEletronico notebook = new ProdutoEletronico("Notebook", 5678, 3000.0, 5, "Dell");
+        ProdutoEletronico televisao = new ProdutoEletronico("Televisão", 5677, 2000.0, 30, "LG SMART");
+
+        estoque.adicionarProduto(smartphone);
+        estoque.adicionarProduto(notebook);
+        estoque.adicionarProduto(televisao); // Adicionando a televisão ao estoque
+
+        // Listando todos os produtos no estoque
+        System.out.println("Lista de Produtos:");
+        estoque.listarProdutos();
+
+        // Atualizando a quantidade de um produto
+        estoque.atualizarQuantidade(1234, 8);
+
+        // Buscando um produto pelo código
+        Produto produtoBuscado = estoque.buscarProduto(5678);
+        if (produtoBuscado != null) {
+            System.out.println("Produto encontrado: " + produtoBuscado);
+        } else {
+            System.out.println("Produto não encontrado.");
+        }
+
+        // Removendo um produto do estoque
+        estoque.removerProduto(1234);
+
+        // Listando novamente os produtos após a remoção
+        System.out.println("\nLista de Produtos Atualizada:");
+        estoque.listarProdutos();
+    }
+
+
+  import java.util.ArrayList;
+
+// Classe que representa um estoque de produtos
+class Estoque {
+    private ArrayList<Produto> produtos;
+
+    public Estoque() {
+        this.produtos = new ArrayList<>();
+    }
+
+    public void adicionarProduto(Produto produto) {
+        produtos.add(produto);
+    }
+
+    public void listarProdutos() {
+        for (Produto produto : produtos) {
+            System.out.println(produto);
+        }
+    }
+
+    public Produto buscarProduto(int codigo) {
+        for (Produto produto : produtos) {
+            if (produto.getCodigo() == codigo) {
+                return produto;
+            }
+        }
+        return null; // Retorna null se o produto não for encontrado
+    }
+
+    public void atualizarQuantidade(int codigo, int quantidade) {
+        Produto produto = buscarProduto(codigo);
+        if (produto != null) {
+            produto.setQuantidade(quantidade);
+        } else {
+            System.out.println("Produto não encontrado.");
+        }
+    }
+
+    public void removerProduto(int codigo) {
+        Produto produto = buscarProduto(codigo);
+        if (produto != null) {
+            produtos.remove(produto);
+            System.out.println("Produto removido com sucesso.");
+        } else {
+            System.out.println("Produto não encontrado.");
+        }
+    }
+}
+
+  import java.util.ArrayList;
+
+// Classe principal que representa um produto genérico
+class Produto {
+    private String nome;
+    private int codigo;
+    private double preco;
+    private int quantidade;
+
+    public Produto(String nome, int codigo, double preco, int quantidade) {
+        this.nome = nome;
+        this.codigo = codigo;
+        this.preco = preco;
+        this.quantidade = quantidade;
+    }
+
+    // Getters e setters para os atributos
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    // Método toString para representação textual do objeto
+    @Override
+    public String toString() {
+        return "Nome: " + nome +
+                ", Código: " + codigo +
+                ", Preço: " + preco +
+                ", Quantidade em Estoque: " + quantidade;
+    }
+}
+
+// Classe que representa um produto eletrônico, especializando a classe Produto
+class ProdutoEletronico extends Produto {
+    private String marca;
+
+    public ProdutoEletronico(String nome, int codigo, double preco, int quantidade, String marca) {
+        super(nome, codigo, preco, quantidade);
+        this.marca = marca;
+    }
+
+    // Getters e setters para o atributo marca
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    // Sobrescrita do método toString para incluir a marca
+    @Override
+    public String toString() {
+        return super.toString() +
+                ", Marca: " + marca;
+    }
+}
+
+  
